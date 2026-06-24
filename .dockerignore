@@ -1,0 +1,10 @@
+vendor
+node_modules
+storage
+storage/*
+public/build
+.env
+.git
+.gitignore
+Dockerfile
+docker-compose.yml

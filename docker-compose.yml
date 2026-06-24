@@ -1,0 +1,43 @@
+version: '3.9'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: deskgamelaravel_app
+    container_name: deskgamelaravel_app
+    restart: unless-stopped
+    working_dir: /var/www/html
+    volumes:
+      - ./:/var/www/html
+      - vendor:/var/www/html/vendor
+      - node_modules:/var/www/html/node_modules
+    ports:
+      - '8000:8000'
+    environment:
+      APP_ENV: local
+      APP_DEBUG: 'true'
+      APP_URL: http://localhost:8000
+      DB_CONNECTION: sqlite
+      DB_DATABASE: /var/www/html/database/database.sqlite
+      QUEUE_CONNECTION: database
+      SESSION_DRIVER: database
+      CACHE_STORE: database
+      REDIS_CLIENT: phpredis
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+    depends_on:
+      - redis
+    command: sh -lc "mkdir -p database && touch database/database.sqlite && composer install --ignore-platform-reqs --no-interaction && php artisan key:generate --ansi && php artisan migrate --force && php artisan serve --host=0.0.0.0 --port=8000"
+
+  redis:
+    image: redis:7-alpine
+    container_name: deskgamelaravel_redis
+    restart: unless-stopped
+    ports:
+      - '6379:6379'
+
+volumes:
+  vendor:
+  node_modules:
