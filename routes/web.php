@@ -20,4 +20,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/produtos/{id}', [ProductController::class, 'show'])->name('produtos.show');
 });
 
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
+    Route::get('/admin/produtos/criar', [ProductController::class, 'create'])->name('produtos.create');
+    Route::post('/admin/produtos', [ProductController::class, 'store'])->name('produtos.store');
+});
+
 require __DIR__.'/auth.php';
