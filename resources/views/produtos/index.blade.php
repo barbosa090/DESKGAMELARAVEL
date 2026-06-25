@@ -8,18 +8,15 @@
 </head>
 <body class="bg-gray-950 text-gray-100 font-sans min-h-screen">
 
-    <header class="bg-gray-900 border-b border-gray-800 p-5">
-        <div class="max-w-6xl mx-auto flex justify-between items-center">
-            <h1 class="text-2xl font-extrabold text-purple-500 tracking-wider">DESK<span class="text-cyan-400">GAME</span></h1>
-            <nav class="space-x-4">
-                <a href="#" class="text-gray-300 hover:text-cyan-400">Home</a>
-                <a href="/produtos" class="text-cyan-400 font-bold">Loja</a>
-                <a href="#" class="text-gray-300 hover:text-cyan-400">Informações</a>
-            </nav>
-        </div>
-    </header>
+    @include('partials.navbar')
 
     <main class="max-w-6xl mx-auto mt-10 p-4">
+        @if(session('sucesso'))
+    <div class="bg-green-900/50 border border-green-500 text-green-200 p-4 rounded-lg mb-6 flex items-center justify-between">
+        <span> {{ session('sucesso') }}</span>
+        <button onclick="this.parentElement.remove()" class="text-green-400 hover:text-green-200 font-bold">✕</button>
+    </div>
+@endif
         <h2 class="text-3xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-cyan-400">
             Máquinas e Componentes Disponíveis
         </h2>
@@ -35,6 +32,13 @@
                     <a href="/produtos/{{ $produto['id'] }}" class="block text-center bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded transition">
                         Ver Detalhes
                     </a>
+                    <form action="{{ route('produtos.destroy', $produto->id) }}" method="POST" class="mt-2" onsubmit="return confirm('Tem certeza que deseja excluir este hardware?')">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="w-full text-xs text-center bg-red-950/40 hover:bg-red-600 border border-red-900/60 text-red-200 py-2 rounded font-bold transition">
+                             Excluir Produto
+                        </button>
+                    </form>
                 </div>
             @endforeach
         </div>
