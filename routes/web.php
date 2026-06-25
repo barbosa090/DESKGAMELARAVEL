@@ -32,7 +32,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard')->middleware('verified');
-    
+    // Fim das rotas do admin
     // Visualização de produtos
     Route::get('/produtos', [ProductController::class, 'index'])->name('produtos.index');
     Route::get('/produtos/{id}', [ProductController::class, 'show'])->name('produtos.show');
