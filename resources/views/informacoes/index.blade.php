@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Notícias DESKGAME</title>
     @vite('resources/css/app.css')
-    @include('partials.fallback-styles')
 </head>
 <body class="bg-slate-950 text-slate-100 font-sans">
     @include('partials.navbar')
@@ -25,6 +24,13 @@
                 <p class="text-sm uppercase tracking-[0.3em] text-purple-300">Informações</p>
                 <h1 class="mt-4 text-4xl font-black text-white sm:text-5xl">As notícias e análises que todo gamer precisa ler.</h1>
                 <p class="mt-5 text-slate-400 leading-8">Acompanhe lançamentos, comparativos e tendências em hardware com um layout limpo e fácil de navegar.</p>
+                @auth
+                    @if(auth()->user()->is_admin)
+                        <div class="mt-8">
+                            <a href="{{ route('posts.create') }}" class="rounded-full bg-gradient-to-r from-purple-500 to-cyan-400 px-5 py-3 text-sm font-semibold text-slate-950 transition hover:opacity-90 inline-block">+ Nova Notícia</a>
+                        </div>
+                    @endif
+                @endauth
             </div>
         </section>
 
@@ -37,33 +43,24 @@
                     </div>
                     <h2 class="text-3xl font-black text-white mb-4 hover:text-purple-300 transition">{{ $post->title }}</h2>
                     <p class="text-slate-400 leading-relaxed mb-6">{{ Str::limit($post->content, 150) }}</p>
-                    <a href="/informacoes/{{ $post->slug }}" class="inline-flex items-center gap-2 text-sm font-semibold text-purple-300 transition hover:text-purple-200">Ler notícia <span>→</span></a>
+                    <div class="flex flex-wrap gap-3">
+                        <a href="/informacoes/{{ $post->slug }}" class="inline-flex items-center gap-2 text-sm font-semibold text-purple-300 transition hover:text-purple-200">Ler notícia <span>→</span></a>
+                        @auth
+                            @if(auth()->user()->is_admin)
+                                <a href="{{ route('posts.edit', $post) }}" class="inline-flex items-center gap-2 text-sm font-semibold text-blue-300 transition hover:text-blue-200">Editar</a>
+                                <form action="{{ route('posts.destroy', $post) }}" method="POST" class="inline" onsubmit="return confirm('Tem certeza que deseja excluir esta notícia?')">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="text-sm font-semibold text-red-300 transition hover:text-red-200">Excluir</button>
+                                </form>
+                            @endif
+                        @endauth
+                    </div>
                 </article>
             @empty
                 <div class="rounded-[2rem] border border-slate-800 bg-slate-900/95 p-8 text-slate-400">Nenhuma notícia publicada ainda. Volte mais tarde.</div>
             @endforelse
         </div>
     </main>
-</body>
-</html>                        <a href="/informacoes/{{ $post->slug }}" class="inline-flex items-center text-purple-400 font-bold hover:text-purple-300 transition">
-                            Ler Artigo Completo <span class="ml-2">→</span>
-                        </a>
-                        <form action="{{ route('posts.destroy', $post->id) }}" method="POST" class="mt-4" onsubmit="return confirm('Tem certeza que deseja excluir esta notícia?')">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="text-xs text-red-400 hover:text-red-200 font-bold transition">
-                                 Excluir Matéria
-                            </button>
-                        </form>
-                    </div>
-                </article>
-            @empty
-                <div class="col-span-2 text-center py-12 bg-gray-900 border border-dashed border-gray-800 rounded-xl">
-                    <p class="text-gray-500">Nenhuma notícia ou review publicado ainda.</p>
-                </div>
-            @endforelse
-        </div>
-    </main>
-
 </body>
 </html>

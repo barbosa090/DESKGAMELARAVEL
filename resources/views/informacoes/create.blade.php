@@ -5,17 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Publicar Notícia - DESKGAMELARAVEL</title>
     @vite('resources/css/app.css')
-    @include('partials.fallback-styles')
-    <style>
-        body { background: #0f172a; color: #e2e8f0 !important; }
-        a { color: #7dd3fc !important; }
-        a:hover { color: #38bdf8 !important; }
-        header, main, section, footer, article { background: rgba(15, 23, 42, 0.95) !important; color: #e2e8f0 !important; }
-        h1, h2, h3, h4, h5, h6 { color: #f8fafc !important; }
-        p, span, li, div { color: #cbd5e1 !important; }
-        .bg-gray-900, .bg-gray-950, .bg-white, .bg-gray-100 { background: rgba(15, 23, 42, 0.95) !important; }
-        .border-gray-800, .border-gray-900, .border-gray-700 { border-color: rgba(148, 163, 184, 0.2) !important; }
-    </style>
 </head>
 <body class="bg-gray-950 text-gray-100 font-sans min-h-screen flex flex-col justify-between">
 

@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DESKGAME — Home</title>
     @vite('resources/css/app.css')
-    @include('partials.fallback-styles')
 </head>
 <body class="bg-slate-950 text-slate-100 font-sans">
     @include('partials.navbar')

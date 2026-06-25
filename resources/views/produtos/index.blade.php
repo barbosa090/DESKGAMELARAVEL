@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Loja DESKGAME</title>
     @vite('resources/css/app.css')
-    @include('partials.fallback-styles')
+
 </head>
 <body class="bg-slate-950 text-slate-100 font-sans">
     @include('partials.navbar')
@@ -59,24 +59,36 @@
                     <p class="text-sm uppercase tracking-[0.3em] text-purple-400">Categorias em destaque</p>
                     <h2 class="mt-3 text-3xl font-black text-white">Confira os melhores equipamentos da semana.</h2>
                 </div>
-                <a href="/produtos" class="text-cyan-300 hover:text-white text-sm font-semibold transition">Ver tudo →</a>
+                <div class="flex gap-3">
+                    <a href="/produtos" class="text-cyan-300 hover:text-white text-sm font-semibold transition">Ver tudo →</a>
+                    @auth
+                        @if(auth()->user()->is_admin)
+                            <a href="{{ route('produtos.create') }}" class="rounded-full bg-gradient-to-r from-purple-500 to-cyan-400 px-4 py-2 text-sm font-semibold text-slate-950 transition hover:opacity-90">+ Novo Produto</a>
+                        @endif
+                    @endauth
+                </div>
             </div>
             <div class="grid gap-6 md:grid-cols-3">
                 @foreach($produtos as $produto)
                     <article class="rounded-[2rem] border border-slate-800 bg-slate-900/95 p-6 shadow-xl shadow-slate-950/20 transition hover:-translate-y-1">
                         <div class="flex items-center justify-between gap-3 mb-5">
                             <span class="rounded-full bg-slate-800 px-3 py-1 text-xs uppercase tracking-[0.3em] text-slate-400">Produto</span>
-                            <span class="text-sm font-semibold text-cyan-300">R$ {{ number_format($produto->price, 2, ',', '.') }}</span>
+                            <span class="text-sm font-semibold text-cyan-300">R$ {{ number_format($produto['price'], 2, ',', '.') }}</span>
                         </div>
                         <h3 class="text-2xl font-bold text-white mb-3 truncate">{{ $produto['nome'] }}</h3>
                         <p class="text-slate-400 mb-6 line-clamp-4">{{ Str::limit($produto['description'] ?? 'Um componente de alta qualidade para seu PC gamer.', 120) }}</p>
                         <div class="flex flex-wrap gap-3">
                             <a href="/produtos/{{ $produto['id'] }}" class="rounded-full bg-gradient-to-r from-purple-500 to-cyan-400 px-4 py-2 text-sm font-semibold text-slate-950 transition hover:opacity-90">Ver detalhes</a>
-                            <form action="{{ route('produtos.destroy', $produto->id) }}" method="POST" class="inline">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="rounded-full border border-slate-700 bg-slate-950/80 px-4 py-2 text-sm font-semibold text-slate-300 transition hover:border-red-500 hover:text-white">Excluir</button>
-                            </form>
+                            @auth
+                                @if(auth()->user()->is_admin)
+                                    <a href="{{ route('produtos.edit', $produto['id']) }}" class="rounded-full border border-slate-700 bg-slate-950/80 px-4 py-2 text-sm font-semibold text-slate-300 transition hover:border-blue-500 hover:text-blue-300">Editar</a>
+                                    <form action="{{ route('produtos.destroy', $produto['id']) }}" method="POST" class="inline" onsubmit="return confirm('Tem certeza que deseja excluir este produto?')">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="rounded-full border border-slate-700 bg-slate-950/80 px-4 py-2 text-sm font-semibold text-slate-300 transition hover:border-red-500 hover:text-red-300">Excluir</button>
+                                    </form>
+                                @endif
+                            @endauth
                         </div>
                     </article>
                 @endforeach
