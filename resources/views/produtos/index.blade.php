@@ -3,46 +3,85 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Loja - DESKGAMELARAVEL</title>
+    <title>Loja DESKGAME</title>
     @vite('resources/css/app.css')
+    @include('partials.fallback-styles')
 </head>
-<body class="bg-gray-950 text-gray-100 font-sans min-h-screen">
-
+<body class="bg-slate-950 text-slate-100 font-sans">
     @include('partials.navbar')
 
-    <main class="max-w-6xl mx-auto mt-10 p-4">
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         @if(session('sucesso'))
-    <div class="bg-green-900/50 border border-green-500 text-green-200 p-4 rounded-lg mb-6 flex items-center justify-between">
-        <span> {{ session('sucesso') }}</span>
-        <button onclick="this.parentElement.remove()" class="text-green-400 hover:text-green-200 font-bold">✕</button>
-    </div>
-@endif
-        <h2 class="text-3xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-cyan-400">
-            Máquinas e Componentes Disponíveis
-        </h2>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            @foreach($produtos as $produto)
-                <div class="bg-gray-900 border border-gray-800 rounded-lg overflow-hidden shadow-lg p-5 hover:border-cyan-500 transition duration-300">
-                    <div class="h-48 bg-gray-800 rounded-md mb-4 flex items-center justify-center text-gray-500">
-                        [ Imagem do Hardware ]
-                    </div>
-                    <h3 class="text-xl font-bold mb-2">{{ $produto['nome'] }}</h3>
-                    <p class="text-cyan-400 text-lg font-extrabold mb-4">{{ $produto['preco'] }}</p>
-                    <a href="/produtos/{{ $produto['id'] }}" class="block text-center bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded transition">
-                        Ver Detalhes
-                    </a>
-                    <form action="{{ route('produtos.destroy', $produto->id) }}" method="POST" class="mt-2" onsubmit="return confirm('Tem certeza que deseja excluir este hardware?')">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="w-full text-xs text-center bg-red-950/40 hover:bg-red-600 border border-red-900/60 text-red-200 py-2 rounded font-bold transition">
-                             Excluir Produto
-                        </button>
-                    </form>
+            <div class="mb-8 rounded-3xl border border-emerald-500/20 bg-emerald-500/10 p-5 text-emerald-200 shadow-inner shadow-emerald-500/10">
+                <div class="flex items-center justify-between gap-4">
+                    <p class="text-sm font-semibold">{{ session('sucesso') }}</p>
+                    <button onclick="this.parentElement.parentElement.remove()" class="rounded-full bg-emerald-500/10 px-3 py-1 text-sm text-emerald-100 transition hover:bg-emerald-500/20">Fechar</button>
                 </div>
-            @endforeach
-        </div>
-    </main>
+            </div>
+        @endif
 
+        <section class="rounded-[2rem] border border-slate-800 bg-slate-900/95 p-8 shadow-2xl shadow-slate-950/30">
+            <div class="grid gap-8 lg:grid-cols-[1.2fr_0.8fr] items-center">
+                <div>
+                    <p class="text-sm uppercase tracking-[0.3em] text-cyan-300">Loja oficial DESKGAME</p>
+                    <h1 class="mt-4 text-4xl font-black tracking-tight text-white sm:text-5xl">Encontre hardware gamer pronto para elevar seu setup.</h1>
+                    <p class="mt-5 max-w-2xl text-slate-400 leading-8">Tudo em um só lugar: componentes, máquinas completas e um feed de notícias para você acompanhar as tendências do mundo gamer.</p>
+                    <div class="mt-8 flex flex-wrap gap-4">
+                        <a href="/produtos" class="inline-flex items-center justify-center rounded-full bg-gradient-to-r from-purple-500 to-cyan-400 px-5 py-3 text-sm font-semibold text-slate-950 shadow-lg shadow-cyan-500/20 transition hover:opacity-95">Explorar Produtos</a>
+                        <a href="/informacoes" class="inline-flex items-center justify-center rounded-full border border-slate-700 bg-slate-950/70 px-5 py-3 text-sm font-semibold text-slate-200 transition hover:border-cyan-400">Ver Notícias</a>
+                    </div>
+                </div>
+                <div class="rounded-[2rem] bg-slate-950/80 p-6 ring-1 ring-slate-800">
+                    <div class="space-y-5">
+                        <div class="rounded-3xl bg-slate-900/90 p-5 shadow-inner shadow-slate-950/30">
+                            <p class="text-sm uppercase tracking-[0.3em] text-cyan-300">Destaque do dia</p>
+                            <h2 class="mt-4 text-3xl font-black text-white">Gaming PC Ultimate X</h2>
+                            <p class="mt-3 text-slate-400">Com processador Ryzen, GPU RTX e acabamento RGB premium para qualquer setup.</p>
+                        </div>
+                        <div class="grid gap-4 sm:grid-cols-2">
+                            <div class="rounded-3xl bg-slate-900/90 p-5">
+                                <p class="text-sm uppercase tracking-[0.3em] text-slate-500">Frete</p>
+                                <p class="mt-3 text-2xl font-black text-white">Rápido</p>
+                            </div>
+                            <div class="rounded-3xl bg-slate-900/90 p-5">
+                                <p class="text-sm uppercase tracking-[0.3em] text-slate-500">Garantia</p>
+                                <p class="mt-3 text-2xl font-black text-white">1 ano</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="mt-12">
+            <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between mb-8">
+                <div>
+                    <p class="text-sm uppercase tracking-[0.3em] text-purple-400">Categorias em destaque</p>
+                    <h2 class="mt-3 text-3xl font-black text-white">Confira os melhores equipamentos da semana.</h2>
+                </div>
+                <a href="/produtos" class="text-cyan-300 hover:text-white text-sm font-semibold transition">Ver tudo →</a>
+            </div>
+            <div class="grid gap-6 md:grid-cols-3">
+                @foreach($produtos as $produto)
+                    <article class="rounded-[2rem] border border-slate-800 bg-slate-900/95 p-6 shadow-xl shadow-slate-950/20 transition hover:-translate-y-1">
+                        <div class="flex items-center justify-between gap-3 mb-5">
+                            <span class="rounded-full bg-slate-800 px-3 py-1 text-xs uppercase tracking-[0.3em] text-slate-400">Produto</span>
+                            <span class="text-sm font-semibold text-cyan-300">R$ {{ number_format($produto->price, 2, ',', '.') }}</span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white mb-3 truncate">{{ $produto['nome'] }}</h3>
+                        <p class="text-slate-400 mb-6 line-clamp-4">{{ Str::limit($produto['description'] ?? 'Um componente de alta qualidade para seu PC gamer.', 120) }}</p>
+                        <div class="flex flex-wrap gap-3">
+                            <a href="/produtos/{{ $produto['id'] }}" class="rounded-full bg-gradient-to-r from-purple-500 to-cyan-400 px-4 py-2 text-sm font-semibold text-slate-950 transition hover:opacity-90">Ver detalhes</a>
+                            <form action="{{ route('produtos.destroy', $produto->id) }}" method="POST" class="inline">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="rounded-full border border-slate-700 bg-slate-950/80 px-4 py-2 text-sm font-semibold text-slate-300 transition hover:border-red-500 hover:text-white">Excluir</button>
+                            </form>
+                        </div>
+                    </article>
+                @endforeach
+            </div>
+        </section>
+    </main>
 </body>
 </html>

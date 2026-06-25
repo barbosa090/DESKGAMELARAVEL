@@ -12,6 +12,7 @@ Route::get('/informacoes/{slug}', [PostController::class, 'show'])->name('posts.
 Route::get('/admin/informacoes/criar', [PostController::class, 'create'])->name('posts.create');
 Route::post('/admin/informacoes', [PostController::class, 'store'])->name('posts.store');
 Route::delete('/admin/produtos/{product}', [ProductController::class, 'destroy'])->name('produtos.destroy');
+Route::delete('/admin/informacoes/{post}', [PostController::class, 'destroy'])->name('posts.destroy');
 Route::get('/', function () {
     return view('welcome');
 });

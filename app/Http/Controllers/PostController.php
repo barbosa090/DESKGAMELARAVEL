@@ -41,6 +41,12 @@ public function store(Request $request)
     return redirect()->route('posts.index')->with('sucesso', 'Notícia publicada com sucesso!');
 }
 
+public function destroy(Post $post)
+{
+    $post->delete();
+
+    return redirect()->route('posts.index')->with('sucesso', 'Notícia excluída com sucesso!');
+}
 
 
 }

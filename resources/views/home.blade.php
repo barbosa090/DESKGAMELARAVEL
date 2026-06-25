@@ -3,72 +3,125 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DESKGAMELARAVEL - Home</title>
+    <title>DESKGAME — Home</title>
     @vite('resources/css/app.css')
+    @include('partials.fallback-styles')
 </head>
-<body class="bg-gray-950 text-gray-100 font-sans min-h-screen">
+<body class="bg-slate-950 text-slate-100 font-sans">
     @include('partials.navbar')
-    <section class="relative bg-gray-900 border-b border-gray-800 py-20 px-5 text-center overflow-hidden">
-        <div class="absolute inset-0 bg-gradient-to-r from-purple-900/20 to-cyan-900/20 pointer-events-none"></div>
-        <div class="max-w-4xl mx-auto relative z-10">
-            <h1 class="text-5xl md:text-6xl font-black tracking-wider uppercase mb-4">
-                DESK<span class="text-cyan-400">GAME</span>
-            </h1>
-            <p class="text-xl text-gray-400 mb-8 max-w-xl mx-auto">
-                O ecossistema definitivo para entusiastas de hardware. Compre setups insanos e consuma informação de alto nível.
-            </p>
-            <div class="flex justify-center gap-4">
-                <a href="/produtos" class="bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-6 rounded-lg transition shadow-lg shadow-purple-500/20">
-                    Ir para a Loja
-                </a>
-                <a href="/informacoes" class="bg-gray-800 hover:bg-gray-700 border border-gray-700 text-gray-300 font-bold py-3 px-6 rounded-lg transition">
-                    Ver Notícias
-                </a>
-            </div>
-        </div>
-    </section>
 
-    <main class="max-w-6xl mx-auto my-16 p-4 space-y-16">
-        
-        <div>
-            <div class="flex justify-between items-end mb-6">
-                <h2 class="text-2xl font-bold border-l-4 border-cyan-400 pl-3">Destaques da Loja</h2>
-                <a href="/produtos" class="text-cyan-400 hover:underline text-sm">Ver todos →</a>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                @foreach($produtos as $produto)
-                    <div class="bg-gray-900 border border-gray-800 p-5 rounded-lg">
-                        <h3 class="font-bold text-lg mb-1 truncate">{{ $produto->name }}</h3>
-                        <p class="text-cyan-400 font-extrabold mb-3">R$ {{ number_format($produto->price, 2, ',', '.') }}</p>
-                        <a href="/produtos/{{ $produto->id }}" class="text-xs block text-center bg-gray-800 hover:bg-purple-600 py-2 rounded font-bold transition">Ver Máquina</a>
+    <main class="relative overflow-hidden">
+        <div class="absolute inset-x-0 top-0 h-72 bg-gradient-to-b from-slate-900 to-transparent pointer-events-none"></div>
+
+        <section class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-14 pb-16 lg:pt-20 lg:pb-24">
+            <div class="grid gap-12 lg:grid-cols-[1.3fr_0.9fr] items-center">
+                <div class="space-y-8">
+                    <div class="inline-flex items-center gap-2 rounded-full bg-cyan-500/10 px-4 py-2 text-sm text-cyan-300 ring-1 ring-cyan-500/20">
+                        Nova coleção de setups hardware com foco em performance e estilo.
                     </div>
-                @endforeach
-            </div>
-        </div>
+                    <div class="space-y-6">
+                        <h1 class="text-5xl font-black tracking-tight sm:text-6xl lg:text-7xl text-white">
+                            Sua loja gamer com visual premium e conteúdo atualizado.
+                        </h1>
+                        <p class="max-w-2xl text-slate-400 text-lg leading-8">
+                            Explore produtos de alta performance, notícias quentes do universo tech e ofertas preparadas para montar o setup dos seus sonhos.
+                        </p>
+                    </div>
 
-        <div>
-            <div class="flex justify-between items-end mb-6">
-                <h2 class="text-2xl font-bold border-l-4 border-purple-500 pl-3">Feed de Informações</h2>
-                <a href="/informacoes" class="text-purple-400 hover:underline text-sm">Ver todas →</a>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                @foreach($posts as $post)
-                    <div class="bg-gray-900 border border-gray-800 p-6 rounded-xl flex flex-col justify-between">
-                        <div>
-                            <h3 class="font-bold text-xl text-white mb-2 hover:text-cyan-400"><a href="/informacoes/{{ $post->slug }}">{{ $post->title }}</a></h3>
-                            <p class="text-gray-400 text-sm line-clamp-2">{{ $post->content }}</p>
+                    <div class="flex flex-wrap gap-4">
+                        <a href="/produtos" class="inline-flex items-center justify-center rounded-full bg-gradient-to-r from-purple-500 to-cyan-400 px-6 py-3 text-base font-semibold text-slate-950 shadow-lg shadow-cyan-500/20 transition hover:scale-[1.01]">
+                            Ir para a Loja
+                        </a>
+                        <a href="/informacoes" class="inline-flex items-center justify-center rounded-full border border-slate-700 bg-slate-900/90 px-6 py-3 text-base font-semibold text-slate-200 transition hover:border-cyan-400 hover:text-white">
+                            Ler Notícias
+                        </a>
+                    </div>
+                </div>
+
+                <div class="relative overflow-hidden rounded-[2rem] border border-slate-800 bg-slate-900/90 shadow-2xl shadow-slate-950/40">
+                    <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_rgba(56,189,248,0.18),_transparent_30%),_radial-gradient(circle_at_bottom_left,_rgba(168,85,247,0.2),_transparent_28%)]"></div>
+                    <div class="relative p-8 sm:p-10 lg:p-12">
+                        <div class="rounded-3xl bg-slate-950/80 p-6 ring-1 ring-slate-800">
+                            <div class="flex items-center justify-between gap-4 mb-8">
+                                <div>
+                                    <p class="text-sm uppercase tracking-[0.3em] text-cyan-300">Top Setup</p>
+                                    <h2 class="mt-3 text-3xl font-black text-white">RTX 4090 + Ryzen 9</h2>
+                                </div>
+                                <span class="rounded-full bg-cyan-500/15 px-3 py-1 text-sm font-semibold text-cyan-200">+23% performance</span>
+                            </div>
+                            <div class="grid gap-4 sm:grid-cols-2">
+                                <div class="rounded-3xl bg-slate-900/90 p-5">
+                                    <p class="text-sm uppercase text-slate-400">Velocidade</p>
+                                    <p class="mt-3 text-3xl font-black text-white">5.2ms</p>
+                                </div>
+                                <div class="rounded-3xl bg-slate-900/90 p-5">
+                                    <p class="text-sm uppercase text-slate-400">Memória</p>
+                                    <p class="mt-3 text-3xl font-black text-white">32GB DDR5</p>
+                                </div>
+                            </div>
                         </div>
-                        <a href="/informacoes/{{ $post->slug }}" class="text-xs text-purple-400 font-bold mt-4 block">Ler mais →</a>
                     </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
+            <div class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between mb-8">
+                <div>
+                    <p class="text-sm uppercase tracking-[0.3em] text-cyan-400">Destaques da Loja</p>
+                    <h2 class="mt-3 text-3xl font-black text-white">Escolha o setup ideal em segundos.</h2>
+                </div>
+                <a href="/produtos" class="text-cyan-300 hover:text-white text-sm font-semibold transition">Ver todos os produtos →</a>
+            </div>
+
+            <div class="grid gap-6 md:grid-cols-3">
+                @foreach($produtos as $produto)
+                    <article class="overflow-hidden rounded-3xl border border-slate-800 bg-slate-900/95 p-6 shadow-xl shadow-slate-950/20 transition hover:-translate-y-1 hover:border-cyan-500/40">
+                        <div class="flex items-center justify-between gap-3 mb-5">
+                            <span class="rounded-full bg-slate-800/80 px-3 py-1 text-xs uppercase tracking-[0.24em] text-slate-400">Hardware</span>
+                            <span class="text-sm font-semibold text-cyan-300">R$ {{ number_format($produto->price, 2, ',', '.') }}</span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white mb-3 truncate">{{ $produto->name }}</h3>
+                        <p class="text-slate-400 leading-relaxed mb-6">{{ Str::limit($produto->description ?? 'Peça rígida e confiável para seu próximo build.', 110) }}</p>
+                        <div class="flex flex-wrap gap-3">
+                            <a href="/produtos/{{ $produto->id }}" class="rounded-full bg-gradient-to-r from-purple-500 to-cyan-400 px-4 py-2 text-sm font-semibold text-slate-950 transition hover:opacity-90">Detalhes</a>
+                            <form action="{{ route('produtos.destroy', $produto->id) }}" method="POST" class="inline">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="rounded-full border border-slate-700 bg-slate-950/80 px-4 py-2 text-sm font-semibold text-slate-300 transition hover:border-red-500 hover:text-white">Excluir</button>
+                            </form>
+                        </div>
+                    </article>
                 @endforeach
             </div>
-        </div>
+        </section>
 
+        <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-24">
+            <div class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between mb-8">
+                <div>
+                    <p class="text-sm uppercase tracking-[0.3em] text-purple-400">Feed de Informações</p>
+                    <h2 class="mt-3 text-3xl font-black text-white">Notícias e tendências do universo gamer.</h2>
+                </div>
+                <a href="/informacoes" class="text-purple-300 hover:text-white text-sm font-semibold transition">Ver todas as notícias →</a>
+            </div>
+
+            <div class="grid gap-6 md:grid-cols-2">
+                @foreach($posts as $post)
+                    <article class="group overflow-hidden rounded-3xl border border-slate-800 bg-slate-900/95 p-6 shadow-xl shadow-slate-950/20 transition hover:-translate-y-1">
+                        <div class="mb-4 text-sm uppercase tracking-[0.3em] text-cyan-300">Notícia</div>
+                        <h3 class="text-2xl font-bold text-white mb-3 group-hover:text-cyan-300 transition">{{ $post->title }}</h3>
+                        <p class="text-slate-400 leading-relaxed mb-6">{{ Str::limit($post->content, 140) }}</p>
+                        <a href="/informacoes/{{ $post->slug }}" class="inline-flex items-center gap-2 text-sm font-semibold text-purple-300 transition hover:text-purple-200">Ler mais <span>→</span></a>
+                    </article>
+                @endforeach
+            </div>
+        </section>
     </main>
 
-    <footer class="bg-gray-900 border-t border-gray-800 text-center p-6 text-gray-500 text-sm">
-        DESKGAMELARAVEL &copy; 2026
+    <footer class="border-t border-slate-800 bg-slate-950/90 py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-sm text-slate-500">
+            DESKGAMELARAVEL © 2026 — todo mundo gamer, tudo muito épico.
+        </div>
     </footer>
-
 </body>
 </html>

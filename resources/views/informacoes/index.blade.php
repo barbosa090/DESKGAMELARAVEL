@@ -3,43 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rede de Informações - DESKGAMELARAVEL</title>
+    <title>Notícias DESKGAME</title>
     @vite('resources/css/app.css')
+    @include('partials.fallback-styles')
 </head>
-<body class="bg-gray-950 text-gray-100 font-sans min-h-screen">
-
+<body class="bg-slate-950 text-slate-100 font-sans">
     @include('partials.navbar')
 
-    <main class="max-w-6xl mx-auto mt-10 p-4">
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         @if(session('sucesso'))
-    <div class="bg-green-900/50 border border-green-500 text-green-200 p-4 rounded-lg mb-6 flex items-center justify-between">
-        <span> {{ session('sucesso') }}</span>
-        <button onclick="this.parentElement.remove()" class="text-green-400 hover:text-green-200 font-bold">✕</button>
-    </div>
-@endif
-        <div class="mb-10 text-center">
-            <h2 class="text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-cyan-400 inline-block">
-                Mundo Hardware & Tech
-            </h2>
-            <p class="text-gray-400 mt-2">Fique por dentro de reviews, lançamentos e notícias do universo gamer.</p>
-        </div>
+            <div class="mb-8 rounded-3xl border border-emerald-500/20 bg-emerald-500/10 p-5 text-emerald-200 shadow-inner shadow-emerald-500/10">
+                <div class="flex items-center justify-between gap-4">
+                    <p class="text-sm font-semibold">{{ session('sucesso') }}</p>
+                    <button onclick="this.parentElement.parentElement.remove()" class="rounded-full bg-emerald-500/10 px-3 py-1 text-sm text-emerald-100 transition hover:bg-emerald-500/20">Fechar</button>
+                </div>
+            </div>
+        @endif
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <section class="rounded-[2rem] border border-slate-800 bg-slate-900/95 p-10 shadow-2xl shadow-slate-950/30 mb-12">
+            <div class="max-w-3xl">
+                <p class="text-sm uppercase tracking-[0.3em] text-purple-300">Informações</p>
+                <h1 class="mt-4 text-4xl font-black text-white sm:text-5xl">As notícias e análises que todo gamer precisa ler.</h1>
+                <p class="mt-5 text-slate-400 leading-8">Acompanhe lançamentos, comparativos e tendências em hardware com um layout limpo e fácil de navegar.</p>
+            </div>
+        </section>
+
+        <div class="grid gap-6 lg:grid-cols-2">
             @forelse($posts as $post)
-                <article class="bg-gray-900 border border-gray-800 rounded-xl overflow-hidden hover:border-purple-500 transition duration-300 flex flex-col justify-between p-6">
-                    <div>
-                        <span class="text-xs text-cyan-400 font-mono tracking-widest uppercase">Notícia • {{ $post->created_at->format('d/m/Y') }}</span>
-                        <h3 class="text-2xl font-bold mt-2 mb-3 text-white hover:text-purple-400 transition">
-                            <a href="/informacoes/{{ $post->slug }}">{{ $post->title }}</a>
-                        </h3>
-                        <p class="text-gray-400 line-clamp-3 mb-4">
-                            {{ Str::limit($post->content, 150) }}
-                        </p>
+                <article class="overflow-hidden rounded-[2rem] border border-slate-800 bg-slate-900/95 p-8 shadow-xl shadow-slate-950/20 transition hover:-translate-y-1">
+                    <div class="flex items-center justify-between gap-4 mb-5">
+                        <span class="text-xs uppercase tracking-[0.3em] text-cyan-300">{{ $post->created_at->format('d/m/Y') }}</span>
+                        <span class="rounded-full bg-slate-800 px-3 py-1 text-xs uppercase tracking-[0.2em] text-slate-400">Notícia</span>
                     </div>
-                    <div>
-                        <a href="/informacoes/{{ $post->slug }}" class="inline-flex items-center text-purple-400 font-bold hover:text-purple-300 transition">
+                    <h2 class="text-3xl font-black text-white mb-4 hover:text-purple-300 transition">{{ $post->title }}</h2>
+                    <p class="text-slate-400 leading-relaxed mb-6">{{ Str::limit($post->content, 150) }}</p>
+                    <a href="/informacoes/{{ $post->slug }}" class="inline-flex items-center gap-2 text-sm font-semibold text-purple-300 transition hover:text-purple-200">Ler notícia <span>→</span></a>
+                </article>
+            @empty
+                <div class="rounded-[2rem] border border-slate-800 bg-slate-900/95 p-8 text-slate-400">Nenhuma notícia publicada ainda. Volte mais tarde.</div>
+            @endforelse
+        </div>
+    </main>
+</body>
+</html>                        <a href="/informacoes/{{ $post->slug }}" class="inline-flex items-center text-purple-400 font-bold hover:text-purple-300 transition">
                             Ler Artigo Completo <span class="ml-2">→</span>
                         </a>
+                        <form action="{{ route('posts.destroy', $post->id) }}" method="POST" class="mt-4" onsubmit="return confirm('Tem certeza que deseja excluir esta notícia?')">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="text-xs text-red-400 hover:text-red-200 font-bold transition">
+                                 Excluir Matéria
+                            </button>
+                        </form>
                     </div>
                 </article>
             @empty
