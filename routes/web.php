@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\AdminAuthenticatedSessionController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
@@ -37,7 +38,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/produtos/{id}', [ProductController::class, 'show'])->name('produtos.show');
 });
 
-// Rotas apenas para ADMIN
+// Rotas de login admin
+Route::middleware('guest')->group(function () {
+    Route::get('/admin/login', [AdminAuthenticatedSessionController::class, 'create'])->name('admin.login');
+    Route::post('/admin/login', [AdminAuthenticatedSessionController::class, 'store']);
+});
+
 Route::middleware(['auth', 'verified', 'admin'])->group(function () {
     // Produtos - Admin
     Route::get('/admin/produtos/criar', [ProductController::class, 'create'])->name('produtos.create');
